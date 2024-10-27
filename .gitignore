@@ -1,0 +1,11 @@
+node_modules
+
+public/fonts/gg mono Bold.*
+public/fonts/gg sans Normal Italic.*
+public/fonts/gg sans Medium Italic.*
+public/fonts/gg sans SemiBold Italic.*
+public/fonts/gg sans Bold*
+public/fonts/gg sans ExtraBold*
+src/colors.json
+.eslintcache
+.stylelintcache
