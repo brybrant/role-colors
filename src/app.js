@@ -2,7 +2,7 @@ import { Horizontal } from '@brybrant/fade-scroll';
 
 import Colors from './colors.json';
 
-import GitHubSVG from '../node_modules/@brybrant/svg-icons/GitHub.svg?raw';
+import GitHubSVG from '../node_modules/@brybrant/svg-icons/GitHub.svg';
 
 import './app.scss';
 
@@ -145,7 +145,7 @@ const githubLink = document.createElement('a');
 githubLink.className = 'github-link';
 githubLink.href = 'https://github.com/brybrant/role-colors';
 githubLink.target = '_blank';
-githubLink.insertAdjacentHTML('beforeend', GitHubSVG);
+githubLink.innerHTML = GitHubSVG;
 
 footer.appendChild(githubLink);
 
