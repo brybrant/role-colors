@@ -56,6 +56,35 @@ for (const [name, shade] of Object.entries(shades)) {
   }
 }
 
+const size = 100;
+const rows = Object.keys(shades).length;
+const columns = hues.length;
+const width = size / columns;
+const height = size / rows;
+
+const favicon = [
+  `<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 ${size} ${size}'>`,
+  '<defs>',
+  `<rect id='a' width='${width}' height='${height}'/>`,
+  '</defs>',
+];
+
+let row = 0;
+
+// Generate favicon
+for (const swatch of Object.values(swatches)) {
+  let column = 0;
+  for (const color of Object.values(swatch)) {
+    favicon.push(`<use href='#a' x='${column}' y='${row}' fill='${color}'/>`);
+    column += width;
+  }
+  row += height;
+}
+
+favicon.push('</svg>');
+
+writeFileSync('./public/favicon.svg', favicon.join(''));
+
 // Grayscale
 swatches.Grayscale = {};
 
