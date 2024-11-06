@@ -127,6 +127,11 @@ for (const [shade, hues] of Object.entries(Colors)) {
   createSection(shade);
 
   for (const [hue, color] of Object.entries(hues)) {
+    if (shade === 'Grayscale') {
+      createSwatch(hue, color);
+      continue;
+    }
+
     createSwatch(`${shade} ${hue}`, color);
   }
 }
