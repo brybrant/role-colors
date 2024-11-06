@@ -85,7 +85,7 @@
 {{- end }}
 
 {{- $message := complexMessage
-	"content" "https://media.discordapp.net/attachments/574236576121356288/1299684425214328902/role-colors.png"
+	"content" "https://brybrant.github.io/role-colors/"
 	"menus" (cslice
 		(cmenu "type" "text" "placeholder" "Select a color (Row 1: Bright)" "custom_id" "color-menu-1" "options" $bright)
 		(cmenu "type" "text" "placeholder" "Select a color (Row 2: Deep)" "custom_id" "color-menu-2" "options" $deep)
