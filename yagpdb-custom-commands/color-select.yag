@@ -1,0 +1,20 @@
+{{- $currentColor := (dbGet .User.ID "color").Value }}
+
+{{- if $currentColor }}
+	{{- removeRoleID ($currentColor.Get "role") 0 }}
+
+	{{- deleteInteractionResponse ($currentColor.Get "response") nil 0 }}
+{{- end }}
+
+{{- $role := getRoleID (index .InteractionData.Values 0) }}
+
+{{- dbSet .User.ID "color" (sdict
+	"role" (str $role.ID)
+	"response" .Interaction.Token
+) }}
+
+{{- addRoleID $role.ID }}
+
+{{- ephemeralResponse -}}
+
+You now have the **{{ $role.Mention }}** color!

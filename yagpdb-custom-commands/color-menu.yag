@@ -1,0 +1,136 @@
+{{ deleteTrigger 0 }}
+
+{{- $repo := "https://brybrant.github.io/role-colors/" }}
+
+{{- $colorChannelID := "<color channel id>" }}
+
+{{- $roleGroups := cslice
+	(sdict
+		"name" "Bright"
+		"roles" (cslice
+			"Bright Red"
+			"Bright Orange"
+			"Bright Yellow"
+			"Bright Green"
+			"Bright Teal"
+			"Bright Cyan"
+			"Bright Blue"
+			"Bright Violet"
+			"Bright Magenta"
+			"Bright Pink"
+		)
+	)
+	(sdict
+		"name" "Deep"
+		"roles" (cslice
+			"Deep Red"
+			"Deep Orange"
+			"Deep Yellow"
+			"Deep Green"
+			"Deep Teal"
+			"Deep Cyan"
+			"Deep Blue"
+			"Deep Violet"
+			"Deep Magenta"
+			"Deep Pink"
+		)
+	)
+	(sdict
+		"name" "Muted"
+		"roles" (cslice
+			"Muted Red"
+			"Muted Orange"
+			"Muted Yellow"
+			"Muted Green"
+			"Muted Teal"
+			"Muted Cyan"
+			"Muted Blue"
+			"Muted Violet"
+			"Muted Magenta"
+			"Muted Pink"
+		)
+	)
+	(sdict
+		"name" "Pastel"
+		"roles" (cslice
+			"Pastel Red"
+			"Pastel Orange"
+			"Pastel Yellow"
+			"Pastel Green"
+			"Pastel Teal"
+			"Pastel Cyan"
+			"Pastel Blue"
+			"Pastel Violet"
+			"Pastel Magenta"
+			"Pastel Pink"
+		)
+	)
+	(sdict
+		"name" "Grayscale"
+		"roles" (cslice
+			"White"
+			"Gray 8"
+			"Gray 7"
+			"Gray 6"
+			"Gray 5"
+			"Gray 4"
+			"Gray 3"
+			"Gray 2"
+			"Gray 1"
+			"Black"
+		)
+	)
+}}
+
+{{- $emojis := cslice "1️⃣" "2️⃣" "3️⃣" "4️⃣" "5️⃣" "6️⃣" "7️⃣" "8️⃣" "9️⃣" "🔟" }}
+
+{{- $menus := cslice }}
+
+{{- range $index, $group := $roleGroups }}
+	{{- $roles := $group.Get "roles" }}
+	{{- $options := cslice }}
+	{{- $indexString := str (add $index 1) }}
+	{{- $placeholder := cslice
+		"Select a color (Row "
+		$indexString
+		": "
+		($group.Get "name")
+		")"
+	}}
+
+	{{- range $emoji, $role := $roles }}
+		{{- $roleObject := getRole $role }}
+
+		{{- $options = $options.Append (sdict
+			"emoji" (sdict "name" (index $emojis $emoji))
+			"label" $roleObject.Name
+			"value" (str $roleObject.ID)
+		) }}
+	{{- end }}
+
+	{{- $menus = $menus.Append (cmenu
+		"custom_id" (joinStr "-" "color-menu" $indexString)
+		"options" $options
+		"placeholder" (joinStr "" $placeholder)
+		"type" "text"
+	) }}
+{{- end }}
+
+{{- $oldMessage := dbGet 0 "color-menu-message" }}
+
+{{- if $oldMessage }}
+	{{- editMessage
+		$colorChannelID
+		$oldMessage.Value
+		(complexMessageEdit
+			"components" $menus
+			"content" $repo
+		)
+	}}
+{{- else }}
+	{{- $messageID := sendMessageRetID $colorChannelID (complexMessage
+		"components" $menus
+		"content" $repo
+	) }}
+	{{- dbSet 0 "color-menu-message" (str $messageID) }}
+{{- end }}
