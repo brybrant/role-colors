@@ -4,7 +4,6 @@ import { hues, shades, swatches } from './src/colors.js';
 
 const size = 100;
 const rows = Object.keys(shades).length;
-// const columns = hues.length;
 const columns = Object.keys(hues).length;
 const width = size / columns;
 const height = size / rows;
