@@ -5,6 +5,8 @@ import svgoPlugin from 'vite-plugin-svgo';
 
 import * as configs from '@brybrant/configs';
 
+import favicon from './favicon.js';
+
 export default defineConfig(({ mode }) => {
   const development = mode === 'development';
 
@@ -18,11 +20,6 @@ export default defineConfig(({ mode }) => {
     },
     css: {
       postcss: configs.postCSSConfig,
-      preprocessorOptions: {
-        scss: {
-          api: 'modern-compiler',
-        },
-      },
     },
     plugins: [
       stylelintPlugin({
@@ -33,6 +30,7 @@ export default defineConfig(({ mode }) => {
       eslintPlugin({
         lintInWorker: true,
       }),
+      favicon(),
     ],
     server: {
       host: '127.0.0.1',

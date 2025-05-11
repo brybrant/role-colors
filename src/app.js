@@ -1,6 +1,6 @@
 import { Horizontal } from '@brybrant/fade-scroll';
 
-import Colors from './colors.json';
+import { swatches } from './colors.js';
 
 import GitHubSVG from '../node_modules/@brybrant/svg-icons/GitHub.svg';
 
@@ -123,7 +123,7 @@ function createSwatch(name, color) {
 }
 
 // Colors
-for (const [shade, hues] of Object.entries(Colors)) {
+for (const [shade, hues] of Object.entries(swatches)) {
   createSection(shade);
 
   for (const [hue, color] of Object.entries(hues)) {
