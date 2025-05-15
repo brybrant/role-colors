@@ -1,16 +1,21 @@
-{{- $currentColor := (dbGet .User.ID "color").Value }}
+{{- $currentColor := (dbGet .User.ID "color-role-id").Value }}
 
 {{- if $currentColor }}
-	{{- removeRoleID ($currentColor.Get "role") 0 }}
+	{{- try -}}
+		{{/* Migration from old CC */}}
+		{{- removeRoleID $currentColor 0 }}
+	{{- catch }}
+		{{- removeRoleID ($currentColor.Get "role") 0 }}
 
-	{{- deleteInteractionResponse ($currentColor.Get "response") nil 0 }}
+		{{- deleteInteractionResponse ($currentColor.Get "token") nil 0 }}
+	{{- end }}
 {{- end }}
 
 {{- $role := getRoleID (index .InteractionData.Values 0) }}
 
-{{- dbSet .User.ID "color" (sdict
+{{- dbSet .User.ID "color-role-id" (sdict
 	"role" (str $role.ID)
-	"response" .Interaction.Token
+	"token" .Interaction.Token
 ) }}
 
 {{- addRoleID $role.ID }}
