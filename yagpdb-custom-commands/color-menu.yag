@@ -2,6 +2,7 @@
 
 {{- $repo := "https://brybrant.github.io/role-colors/" }}
 
+{{/* Replace "<color channel id>" with the ID of the channel for the color menu message */}}
 {{- $colorChannelID := "<color channel id>" }}
 
 {{- $roleGroups := cslice
