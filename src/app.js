@@ -23,39 +23,55 @@ if (window.location.hash) {
   textbox.value = window.location.hash.slice(1);
 }
 
-// Lightmode toggle
-const lightModeToggle = document.createElement('div');
-lightModeToggle.className = 'lightmode-toggle';
+// Theme buttons
+const themeContainer = document.createElement('div');
+themeContainer.className = 'theme-container';
 
-const lightModeLabel = document.createElement('label');
-lightModeLabel.htmlFor = 'lightmode-checkbox';
-lightModeLabel.innerText = 'Light mode?';
-lightModeToggle.appendChild(lightModeLabel);
+const themes = ['light', 'ash', 'dark', 'onyx'];
 
-const lightModeCheckbox = document.createElement('input');
-lightModeCheckbox.type = 'checkbox';
-lightModeCheckbox.id = 'lightmode-checkbox';
-lightModeToggle.appendChild(lightModeCheckbox);
+for (const theme of themes) {
+  const buttonContainer = document.createElement('div');
+  buttonContainer.className = 'theme-button theme-button--' + theme;
+
+  const themeButton = document.createElement('input');
+  themeButton.name = 'theme';
+  themeButton.type = 'radio';
+  themeButton.value = theme;
+
+  buttonContainer.appendChild(themeButton);
+
+  themeButton.addEventListener('click', () => {
+    document.documentElement.className = theme + '-theme';
+  });
+
+  const themeTooltip = document.createElement('div');
+  themeTooltip.className = 'tooltip';
+
+  const tooltipArrow = document.createElement('div');
+  tooltipArrow.className = 'tooltip__arrow';
+
+  const tooltipInner = document.createElement('div');
+  tooltipInner.className = 'tooltip__inner';
+  tooltipInner.innerText = theme;
+
+  themeTooltip.appendChild(tooltipArrow);
+  themeTooltip.appendChild(tooltipInner);
+
+  buttonContainer.appendChild(themeTooltip);
+
+  themeContainer.appendChild(buttonContainer);
+}
 
 if (
   window.matchMedia &&
-  window.matchMedia('(prefers-color-scheme: light').matches
+  window.matchMedia('(prefers-color-scheme: light)').matches
 ) {
-  document.documentElement.className = 'light-mode';
-  lightModeCheckbox.checked = true;
+  document.documentElement.className = 'light-theme';
 }
 
-lightModeCheckbox.addEventListener('change', (event) => {
-  if (event.target.checked) {
-    document.documentElement.className = 'light-mode';
-  } else {
-    document.documentElement.className = 'dark-mode';
-  }
-});
-
-textboxContainer.appendChild(lightModeToggle);
-
 app.appendChild(textboxContainer);
+
+app.appendChild(themeContainer);
 
 /**
  * @type {Horizontal[]}
@@ -123,16 +139,16 @@ function createSwatch(name, color) {
 }
 
 // Colors
-for (const [shade, hues] of Object.entries(swatches)) {
-  createSection(shade);
+for (const [shadeName, hues] of Object.entries(swatches)) {
+  createSection(shadeName);
 
-  for (const [hue, color] of Object.entries(hues)) {
-    if (shade === 'Grayscale') {
-      createSwatch(hue, color);
+  for (const [hueName, color] of Object.entries(hues)) {
+    if (shadeName === 'Grayscale') {
+      createSwatch(hueName, color);
       continue;
     }
 
-    createSwatch(`${shade} ${hue}`, color);
+    createSwatch(`${shadeName} ${hueName}`, color);
   }
 }
 

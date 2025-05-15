@@ -1,4 +1,5 @@
 @use '../node_modules/@brybrant/fade-scroll/dist/fade-scroll.css' as *;
+@use 'themes' as *;
 
 @font-face {
   font-weight: 400;
@@ -108,29 +109,14 @@
 //     url('/fonts/gg sans ExtraBold Italic.ttf') format('truetype');
 // }
 
-$dark-background: #313338;
-$light-background: #fff;
-$color-900: #f2f3f5;
-$color-850: #ebedef;
-$color-825: #e3e5e8;
-$color-800: #e1e2e4;
-$color-700: #dbdee1;
-$color-600: #c4c9ce;
-$color-550: #949ba4;
-$color-500: #80848e;
-$color-450: #6d6f78;
-$color-400: #5c5e66;
-$color-350: #3f4147;
-$color-300: #383a40;
-$color-200: #2b2d31;
-$color-100: #1e1f22;
+$blurple: #5865f2;
+$tooltip-arrow-size: 5px;
 
 *, :before, :after {
   box-sizing: border-box;
 }
 
 html {
-  background: $dark-background;
   font-size: 100%;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -142,7 +128,6 @@ html {
 body {
   min-height: 100vh;
   margin: 0;
-  color: $color-700;
   font-weight:  400;
   font-family:
     'gg sans',
@@ -181,67 +166,142 @@ body {
 .preview-input {
   display: inline-block;
   width: 320px;
-  height: 44px;
-  padding: 11px 10px;
-  border: 0;
+  height: 52px;
+  padding: 15px 10px;
+  border-width: 1px;
+  border-style: solid;
   border-radius: 8px;
-  background: $color-300;
   color: inherit;
   outline: 0;
   font-size: 1rem;
   font-family: inherit;
   line-height: 1.375rem;
-
-  &:placeholder-shown {
-    color: $color-450;
-  }
 }
 
-.lightmode-toggle {
-  display: inline-flex;
+.tooltip {
+  position: absolute;
+  z-index: 1;
+  padding: 10px;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 16px;
+  opacity: 0;
+  visibility: hidden;
+  will-change: opacity, transform;
+}
+
+.tooltip__arrow, .tooltip__arrow:after {
+  position: absolute;
+  width: 0;
+  height: 0;
+  border: $tooltip-arrow-size solid transparent;
+}
+
+.tooltip__arrow:after {
+  content: '';
+  top: -$tooltip-arrow-size;
+  left: -$tooltip-arrow-size;
+}
+
+.tooltip__inner {
+  padding: 8px 12px;
+  border-width: 1px;
+  border-style: solid;
+  border-radius: 8px;
+  box-shadow: 0 12px 24px 0 rgba(#000, 0.24);
+}
+
+.theme-container {
+  display: flex;
   flex-flow: row nowrap;
-  padding: 10px 0;
+  justify-content: center;
+}
 
-  @media (width >= 861px) {
-    position: absolute;
-    top: 50%;
-    right: 0;
-    transform: translateY(-50%);
+.theme-button {
+  position: relative;
+  width: 3.25rem;
+  height: 3.25rem;
+  margin: 1rem 0.5rem 0;
+
+  .tooltip {
+    top: 100%;
+    left: 50%;
+    /* stylelint-disable plugin/no-low-performance-animation-properties */
+    transition:
+      opacity 66ms ease-in,
+      transform 66ms ease-in,
+      visibility 0s linear 66ms;
+    /* stylelint-enable plugin/no-low-performance-animation-properties */
+    transform: translate(-50%) scale(0.95);
   }
 
-  label {
-    padding: 0 8px;
-    color: inherit;
-    font-size: 14px;
-    font-family: inherit;
-    line-height: 24px;
+  input {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    border-width: 1px;
+    border-style: solid;
+    border-radius: 50%;
     cursor: pointer;
+    appearance: none;
+
+    &:hover + .tooltip {
+      opacity: 1;
+      visibility: visible;
+      transition:
+        opacity 66ms ease-out,
+        transform 66ms ease-out;
+      transform: translate(-50%) scale(1);
+    }
+  }
+
+  .tooltip__arrow {
+    top: 0;
+    left: 50%;
+    transform: translate(-50%);
+
+    &:after {
+      transform: translateY(1.5px);
+    }
+  }
+
+  .tooltip__inner {
+    text-transform: capitalize;
   }
 }
 
-#lightmode-checkbox {
-  width: 24px;
-  height: 24px;
-  margin: 0;
-  border: 1px solid $color-500;
-  border-radius: 6px;
-  background: none;
-  outline: 0;
-  cursor: pointer;
-  appearance: none;
+.light-theme .theme-button--light,
+.ash-theme .theme-button--ash,
+.dark-theme .theme-button--dark,
+.onyx-theme .theme-button--onyx {
+  &:before {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    border: 2px solid $blurple;
+    border-radius: 50%;
+    pointer-events: none;
+  }
 
-  &:checked {
-    border-color: #7983f5;
-    background: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"%3E%3Cpath fill="%23fff" d="M21.7 5.3a1 1 0 0 1 0 1.4l-12 12a1 1 0 0 1-1.4 0l-6-6a1 1 0 1 1 1.4-1.4L9 16.58l11.3-11.3a1 1 0 0 1 1.4 0Z"/%3E%3C/svg%3E') 50% 50% / 18px 18px no-repeat;
-    background-color: #5865f2;
+  &:after {
+    content: '';
+    position: absolute;
+    top: -1px;
+    right: -1px;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: $blurple url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"%3E%3Cpath fill="none" stroke="%23fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.06 9.04 6 12l6.9-6.9"/%3E%3C/svg%3E') 50% 50% / 16px 16px no-repeat;
+    pointer-events: none;
   }
 }
 
 .container {
   overflow: hidden;
   width: 160px;
-  margin: 1.0625rem 0 0;
-  padding: 0 4px;
+  margin: 0.125rem 0 0;
+  padding: 2px 4px 4px;
+  border-radius: 8px;
 }
 
 .swatch {
@@ -273,9 +333,9 @@ body {
 
 .swatch-code {
   padding: 0 0.2em;
-  border: 1px solid $color-100;
+  border-width: 1px;
+  border-style: solid;
   border-radius: 4px;
-  background: $color-200;
   color: inherit;
   font-size: 85%;
   font-family:
@@ -292,7 +352,7 @@ body {
 .hr {
   position: relative;
   width: 100%;
-  margin-top: 1.5rem;
+  margin: 1.5rem 0 0.75rem;
 
   h2 {
     position: absolute;
@@ -301,8 +361,6 @@ body {
     margin: 0;
     padding: 2px 4px;
     border-radius: 8px;
-    background: $dark-background;
-    color: $color-550;
     font-weight: 600;
     font-size: 12px;
     line-height: 13px;
@@ -316,7 +374,8 @@ hr {
   width: 100%;
   margin: 0;
   border: 0;
-  border-top: 1px solid $color-350;
+  border-style: solid;
+  border-top-width: 1px;
 }
 
 footer {
@@ -330,58 +389,11 @@ footer {
   height: 48px;
   margin: 0 auto;
   border-radius: 50%;
-  color: $color-550;
-
-  &:hover {
-    color: $color-600;
-  }
 
   svg {
     width: 48px;
     height: 48px;
     border-radius: 50%;
     fill: currentColor;
-  }
-}
-
-.light-mode {
-  background: $light-background;
-
-  body {
-    color: $dark-background;
-  }
-
-  .preview-input {
-    background: $color-850;
-
-    &:placeholder-shown {
-      color: $color-500;
-    }
-  }
-
-  #lightmode-checkbox {
-    border-color: $color-600;
-  }
-
-  .swatch-code {
-    border-color: $color-825;
-    background: $color-900;
-  }
-
-  .hr h2 {
-    background: $light-background;
-    color: $color-400;
-  }
-
-  hr {
-    border-top-color: $color-800;
-  }
-
-  .github-link {
-    color: $color-400;
-
-    &:hover {
-      color: $color-350;
-    }
   }
 }

@@ -1,0 +1,85 @@
+@use 'sass:map';
+
+@use 'themes/light-theme' as *;
+@use 'themes/ash-theme' as *;
+@use 'themes/dark-theme' as *;
+@use 'themes/onyx-theme' as *;
+
+$themes: (
+  'light': $light-theme,
+  'ash': $ash-theme,
+  'dark': $dark-theme,
+  'onyx': $onyx-theme,
+);
+
+@each $name, $theme in $themes {
+  .theme-button--#{$name} input {
+    background: map.get($theme, 'theme-button-background');
+  }
+
+  .#{$name}-theme {
+    background: map.get($theme, 'body-background');
+  
+    body {
+      color: map.get($theme, 'body-color');
+    }
+  
+    .preview-input {
+      border-color: map.get($theme, 'input-border');
+      background: map.get($theme, 'input-background');
+  
+      &:placeholder-shown {
+        color: map.get($theme, 'input-placeholder');
+      }
+    }
+    
+    .tooltip__inner {
+      background: map.get($theme, 'body-background');
+      border-color: map.get($theme, 'tooltip-border');
+    }
+  
+    .theme-button {
+      .tooltip__arrow {
+        border-bottom-color: map.get($theme, 'tooltip-border');
+  
+        &:after {
+          border-bottom-color: map.get($theme, 'body-background');
+        }
+      }
+
+      input {
+        border-color: map.get($theme, 'theme-button-border');
+      }
+    }
+  
+    .theme-button--#{$name} input {
+      border-width: 0;
+    }
+    
+    .container:hover {
+      background: map.get($theme, 'body-background-hover');
+    }
+  
+    .swatch-code {
+      border-color: map.get($theme, 'code-border');
+      background: map.get($theme, 'code-background');
+    }
+  
+    .hr h2 {
+      background: map.get($theme, 'body-background');
+      color: map.get($theme, 'section-color');
+    }
+  
+    hr {
+      border-color: map.get($theme, 'section-border');
+    }
+  
+    .github-link {
+      color: map.get($theme, 'icon');
+  
+      &:hover {
+        color: map.get($theme, 'icon-hover');
+      }
+    }
+  }
+}
