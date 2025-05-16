@@ -1,6 +1,6 @@
 import { writeFile } from 'node:fs';
 
-import { wcagContrast } from 'culori';
+// import { wcagContrast } from 'culori';
 
 import { swatches } from '../src/colors.js';
 
@@ -41,43 +41,31 @@ let index = 1;
 const roleTable = [
   `<details>
   <summary>Roles</summary>
-  <table>
-    <thead>
-      <tr>
-        <th>Role #</th>
-        <th>Role Name</th>
-        <th>Role Color</th>
-      </tr>
-    </thead>
-    <tbody>`,
+
+  |Role #|Role Name|Role Color|
+  |  ---:|---------|----------|`,
 ];
 
 for (const [shadeName, hues] of Object.entries(swatches)) {
-  roleTable.push(
-    `<tr><th colspan="3" style="text-align:center">${shadeName}</th></tr>`,
-  );
-
   for (const [hueName, color] of Object.entries(hues)) {
-    const whiteContrast = wcagContrast(color, '#ffffff');
+    // const whiteContrast = wcagContrast(color, '#ffffff');
 
-    const blackContrast = wcagContrast(color, '#000000');
+    // const blackContrast = wcagContrast(color, '#000000');
 
     roleTable.push(
-      '<tr>',
-      `<td align="right">${index++}</td>`,
-      `<td>${shadeName === 'Grayscale' ? '' : shadeName} ${hueName}</td>`,
-      `<td style="background:${color};color:${
-        whiteContrast > blackContrast ? '#fff' : '#000'
-      }">\`${color}\`</td>`,
-      '</tr>',
+      `|${index++}|${
+        shadeName === 'Grayscale' ? '' : shadeName
+      } ${hueName}|\`${color}\`|`,
     );
+
+    // color:${whiteContrast > blackContrast ? '#fff' : '#000'}
   }
 }
 
-roleTable.push('</tbody></table></details>');
+roleTable.push('</details>');
 
 readme.push(
-  roleTable.join('\n'),
+  roleTable.join('\n  '),
 
   '### Create two Custom Commands in the YAGPDB.xyz control panel for your Discord server with the following settings:',
 
