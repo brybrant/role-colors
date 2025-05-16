@@ -25,12 +25,12 @@
     "@brybrant/sass-okhsv-okhsl": "^1.0.0",
     "@brybrant/svg-icons": "github:brybrant/svg-icons",
     "culori": "^4.0.1",
-    "globals": "^15.15.0",
-    "sass-embedded": "^1.87.0",
+    "globals": "^16.1.0",
+    "sass-embedded": "^1.88.0",
     "vite": "^6.3.5",
     "vite-plugin-eslint2": "^5.0.3",
     "vite-plugin-stylelint": "^6.0.0",
-    "vite-plugin-svgo": "^1.6.2"
+    "vite-plugin-svgo": "^2.0.0"
   },
   "browserslist": [
     "> 1%, not dead, not ie 11, not op_mini all"
