@@ -142,7 +142,7 @@ body {
   position: relative;
   display: flex;
   flex-flow: row wrap;
-  justify-content: center;
+  place-content: flex-start center;
   align-items: flex-start;
   width: 360px;
   margin: 0 auto;
