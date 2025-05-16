@@ -1,27 +1,13 @@
 import { writeFile } from 'node:fs';
 
-// import { wcagContrast } from 'culori';
-
 import { swatches } from '../src/colors.js';
 
-function commandTable(details = { type: '', trigger: '', response: '' }) {
+function commandTable({ type = '', trigger = '', response = '' }) {
   return `
-  <table>
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Trigger</th>
-        <th>Response</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>${details.type}</td>
-        <td>${details.trigger}</td>
-        <td>${details.response}</td>
-      </tr>
-    </tbody>
-  </table>`;
+  |Type|Trigger|Response|
+  |----|-------|--------|
+  |${type}|${trigger}|${response}|
+  `;
 }
 
 const readme = [
@@ -41,31 +27,45 @@ let index = 1;
 const roleTable = [
   `<details>
   <summary>Roles</summary>
-
-  |Role #|Role Name|Role Color|
-  |  ---:|---------|----------|`,
+  <table>
+    <tr>
+      <th>Role #</th>
+      <th>Role Name</th>
+      <th>Role Color</th>
+    </tr>`,
 ];
 
+const svgSize = 12;
+const circleSize = svgSize / 2;
+
 for (const [shadeName, hues] of Object.entries(swatches)) {
+  roleTable.push(`<tr><th colspan="3">${shadeName}</th></tr>`);
+
   for (const [hueName, color] of Object.entries(hues)) {
-    // const whiteContrast = wcagContrast(color, '#ffffff');
+    const svg = [
+      `<svg viewBox="0 0 ${svgSize} ${svgSize}" width="${svgSize}" height="${svgSize}" xmlns="http://www.w3.org/2000/svg">`,
+      `<circle fill="${color}" cx="${circleSize}" cy="${circleSize}" r="${circleSize}"/>`,
+      '</svg>',
+    ];
 
-    // const blackContrast = wcagContrast(color, '#000000');
+    const roleTableRow = [];
 
-    roleTable.push(
-      `|${index++}|${
-        shadeName === 'Grayscale' ? '' : shadeName
-      } ${hueName}|\`${color}\`|`,
+    roleTableRow.push(
+      index++,
+      `${shadeName === 'Grayscale' ? '' : shadeName} ${hueName}`,
+      `<code>${color}</code> ${svg.join('')}`,
     );
 
-    // color:${whiteContrast > blackContrast ? '#fff' : '#000'}
+    roleTable.push(
+      `<tr><td align="right">${roleTableRow.join('</td><td>')}</td></tr>`,
+    );
   }
 }
 
-roleTable.push('</details>');
+roleTable.push('</table></details>');
 
 readme.push(
-  roleTable.join('\n  '),
+  roleTable.join('\n'),
 
   '### Create two Custom Commands in the YAGPDB.xyz control panel for your Discord server with the following settings:',
 
@@ -73,22 +73,20 @@ readme.push(
 
   commandTable({
     type: 'Command',
-    trigger: '<code>colors</code>',
-    response:
-      '<a href="./yagpdb-custom-commands/color-menu.yag">color-menu.yag</a>',
+    trigger: '`colors`',
+    response: '[color-menu.yag](./yagpdb-custom-commands/color-menu.yag)',
   }),
 
-  '- **Make sure to replace `<color channel id>` with the ID of the channel that the color menu message will be posted to.**',
+  '- Make sure to replace `<color channel id>` with the ID of the channel that the color menu message will be posted to.',
 
-  '- **You must afford the bot permission to post messages to the designated channel or else the command will fail.**',
+  '- You must give the bot permission to post messages to the designated channel or else the command will fail.',
 
   '#### Custom Command 2: Set color role on interacting user',
 
   commandTable({
     type: 'Message Component',
-    trigger: '<code>^color-menu-\\d$</code>',
-    response:
-      '<a href="./yagpdb-custom-commands/interaction.yag">interaction.yag</a>',
+    trigger: '`^color-menu-\\d$`',
+    response: '[interaction.yag](./yagpdb-custom-commands/interaction.yag)',
   }),
 
   '## gg sans',
