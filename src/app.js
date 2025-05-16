@@ -2,6 +2,8 @@ import { Horizontal } from '@brybrant/fade-scroll';
 
 import { swatches } from './colors.js';
 
+import { createSection } from './_utils.js';
+
 import GitHubSVG from '../node_modules/@brybrant/svg-icons/GitHub.svg';
 
 import './app.scss';
@@ -79,22 +81,6 @@ app.appendChild(themeContainer);
 const previews = [];
 
 /**
- * @param {string} name - Name of the section
- */
-function createSection(name) {
-  const hr = document.createElement('div');
-  hr.className = 'hr';
-
-  hr.appendChild(document.createElement('hr'));
-
-  const hrLabel = document.createElement('h2');
-  hrLabel.innerText = name;
-  hr.appendChild(hrLabel);
-
-  app.appendChild(hr);
-}
-
-/**
  * @param {string} name - Name of the color
  * @param {string} color - HEX color code string (like `#fff` or `#ff0000`)
  */
@@ -140,7 +126,7 @@ function createSwatch(name, color) {
 
 // Colors
 for (const [shadeName, hues] of Object.entries(swatches)) {
-  createSection(shadeName);
+  app.appendChild(createSection(shadeName));
 
   for (const [hueName, color] of Object.entries(hues)) {
     if (shadeName === 'Grayscale') {

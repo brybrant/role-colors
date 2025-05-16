@@ -1,0 +1,53 @@
+#app {
+  width: 400px !important;
+  height: 300px !important;
+  margin: 20px auto;
+  padding: 0;
+
+  &:after {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    border: 1px solid #000;
+    pointer-events: none;
+  }
+}
+
+.hr {
+  margin: 10px 0;
+  padding: 0 4px;
+}
+
+.preview {
+  width: 10%;
+  margin-bottom: 12px;
+  font-weight: 500;
+  font-size: 1rem;
+  line-height: 1.375rem;
+}
+
+$number-size: 20px;
+
+.number {
+  position: relative;
+  width: 10%;
+  height: $number-size;
+
+  svg {
+    vertical-align: top;
+    width: $number-size;
+    height: $number-size;
+    margin-top: -$number-size;
+    fill: #fff;
+  }
+
+  &:before {
+    content: '';
+    display: block;
+    width: $number-size;
+    height: 100%;
+    margin: 0 auto;
+    border-radius: 4px;
+    background: #3B88C3;
+  }
+}
