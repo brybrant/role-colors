@@ -35,7 +35,7 @@ const roleTable = [
     </tr>`,
 ];
 
-const svgSize = 16;
+const svgSize = 14;
 const circleSize = svgSize / 2;
 
 for (const [shadeName, hues] of Object.entries(swatches)) {
