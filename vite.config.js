@@ -5,7 +5,7 @@ import svgoPlugin from 'vite-plugin-svgo';
 
 import * as configs from '@brybrant/configs';
 
-import favicon from './favicon.js';
+import favicon from './scripts/favicon.js';
 
 export default defineConfig(({ mode }) => {
   const development = mode === 'development';

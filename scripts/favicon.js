@@ -1,6 +1,6 @@
 import { writeFile } from 'node:fs';
 
-import { hues, shades, swatches } from './src/colors.js';
+import { hues, shades, swatches } from '../src/colors.js';
 
 const size = 100;
 const rows = Object.keys(shades).length;
