@@ -1,4 +1,4 @@
-import { writeFile } from 'node:fs';
+import { writeFileSync } from 'node:fs';
 
 import { swatches } from '../src/colors.js';
 
@@ -48,12 +48,16 @@ for (const [shadeName, hues] of Object.entries(swatches)) {
       '</svg>',
     ];
 
+    const name = (shadeName === 'Grayscale' ? '' : `${shadeName} `) + hueName;
+
+    writeFileSync(`./public/readme/${name}.svg`, svg.join(''));
+
     const roleTableRow = [];
 
     roleTableRow.push(
       index++,
-      `${shadeName === 'Grayscale' ? '' : shadeName} ${hueName}`,
-      `<code>${color}</code> ${svg.join('')}`,
+      name,
+      `<code>${color}</code> <img src="./public/readme/${name}.svg">`,
     );
 
     roleTable.push(
@@ -94,8 +98,4 @@ readme.push(
   'This project uses Discord\'s proprietary font ["gg sans"](https://support.discord.com/hc/en-us/articles/9507780972951-gg-sans-Font-Update-FAQ) which is Copyright &copy; Discord Inc.',
 );
 
-writeFile('./README.md', readme.join('\n\n'), (error) => {
-  if (error) return console.error(error);
-
-  console.log('Generated README.md');
-});
+writeFileSync('./README.md', readme.join('\n\n'));
