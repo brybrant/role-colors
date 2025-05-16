@@ -2,7 +2,7 @@ import { writeFile } from 'node:fs';
 
 import { wcagContrast } from 'culori';
 
-import { swatches } from './src/colors.js';
+import { swatches } from '../src/colors.js';
 
 function commandTable(details = { type: '', trigger: '', response: '' }) {
   return `
@@ -64,11 +64,11 @@ for (const [shadeName, hues] of Object.entries(swatches)) {
 
     roleTable.push(
       '<tr>',
-      `<td style="text-align:right">${index++}</td>`,
+      `<td align="right">${index++}</td>`,
       `<td>${shadeName === 'Grayscale' ? '' : shadeName} ${hueName}</td>`,
       `<td style="background:${color};color:${
         whiteContrast > blackContrast ? '#fff' : '#000'
-      }"><code>${color}</code></td>`,
+      }">\`${color}\`</td>`,
       '</tr>',
     );
   }
