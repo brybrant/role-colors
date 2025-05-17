@@ -6,7 +6,7 @@ Custom Command code for [YAGPDB.xyz](https://yagpdb.xyz/) to facilitate self-ass
 
 ## Setup
 
-### Create 50 roles in your Discord server:
+### 1. Create 50 roles in your Discord server:
 
 <details>
   <summary>Roles</summary>
@@ -73,27 +73,25 @@ Custom Command code for [YAGPDB.xyz](https://yagpdb.xyz/) to facilitate self-ass
 <tr><td align="right">50</td><td>Black</td><td><code>#010101</code> <img src="./public/readme/Black.svg"></td></tr>
 </table></details>
 
-### Create two Custom Commands in the YAGPDB.xyz control panel for your Discord server with the following settings:
-
-#### Custom Command 1: Post/update the color menu message
+### 2. Create two Custom Commands for your Discord server in the YAGPDB.xyz control panel with the following settings:
 
 
-  |Type|Trigger|Response|
-  |----|-------|--------|
-  |Command|`colors`|[color-menu.yag](./yagpdb-custom-commands/color-menu.yag)|
-  
+> #### Custom Command 1: Post/update the color menu message
+>
+>  |Type|Trigger|Response|
+>  |----|-------|--------|
+>  |Command|`colors`|[color-menu.yag](./yagpdb-custom-commands/color-menu.yag)|
 
-- Make sure to replace `<color channel id>` with the ID of the channel that the color menu message will be posted to.
+- Make sure to replace `<color channel id>` with the ID of the channel that the color menu message will be posted. ([How to acquire Discord channel IDs](https://support.discord.com/hc/en-us/articles/206346498-Where-can-I-find-my-User-Server-Message-ID))
 
 - You must give the bot permission to post messages to the designated channel or else the command will fail.
 
-#### Custom Command 2: Set color role on interacting user
 
-
-  |Type|Trigger|Response|
-  |----|-------|--------|
-  |Message Component|`^color-menu-\d$`|[interaction.yag](./yagpdb-custom-commands/interaction.yag)|
-  
+> #### Custom Command 2: Set color role on interacting user
+>
+>  |Type|Trigger|Response|
+>  |----|-------|--------|
+>  |Message Component|`^color-menu-\d$`|[interaction.yag](./yagpdb-custom-commands/interaction.yag)|
 
 ## gg sans
 
