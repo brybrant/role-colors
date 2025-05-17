@@ -30,7 +30,7 @@ export default defineConfig(({ mode }) => {
       eslintPlugin({
         lintInWorker: true,
       }),
-      favicon(),
+      ...(development ? [favicon()] : []),
     ],
     server: {
       host: '127.0.0.1',
